@@ -1,0 +1,1 @@
+#https://www.timeshighereducation.com/sites/default/files/the_data_rankings/world_university_rankings_2023_0__83be12210294c582db8740ee29673120.json

@@ -1,0 +1,38 @@
+ul.reactpaginate {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0 5rem;
+  }
+  ul.reactpaginate li:first-child {
+    border-top-left-radius: 7px;
+  }
+
+  ul.reactpaginate li:last-child {
+    border-top-right-radius: 7px;
+  }
+  ul.reactpaginate li a {
+    border-radius: 7px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+  }
+  ul.reactpaginate li.previous a,
+  ul.reactpaginate li.next a,
+  ul.reactpaginate li.break a {
+    border-color: transparent;
+  }
+  ul.reactpaginate li.selected a {
+    background-color: var(--minimal-2);
+    border-color: transparent;
+    color: white;
+    min-width: 32px;
+  }
+  ul.reactpaginate li.disabled a {
+    color: grey;
+  }
+  ul.reactpaginate li.disable,
+  ul.reactpaginate li.disabled a {
+    cursor: default;
+  }

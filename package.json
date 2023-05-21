@@ -1,0 +1,53 @@
+{
+  "name": "forum-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
+    "@chakra-ui/react": "^2.5.1",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@maplibre/maplibre-gl-geocoder": "^1.5.0",
+    "@types/node": "18.15.3",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "@zilliz/milvus2-sdk-node": "^2.2.6",
+    "axios": "^1.3.5",
+    "cheerio": "^1.0.0-rc.12",
+    "cohere-ai": "^6.2.0",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.7",
+    "eslint": "8.36.0",
+    "eslint-config-next": "13.2.4",
+    "framer-motion": "^10.3.2",
+    "fuse.js": "^6.6.2",
+    "maplibre-gl": "^2.4.0",
+    "micro-cors": "^0.1.1",
+    "next": "13.2.4",
+    "nextjs-cors": "^2.1.2",
+    "openai": "^3.2.1",
+    "react": "18.2.0",
+    "react-autosuggest": "^10.1.0",
+    "react-data-grid": "^7.0.0-beta.28",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
+    "react-leaflet": "^4.2.1",
+    "react-markdown": "^8.0.5",
+    "react-paginate": "^8.1.5",
+    "react-quill": "^2.0.0",
+    "react-search-autocomplete": "^8.3.2",
+    "rehype-raw": "^6.1.1",
+    "remark-gfm": "^3.0.1",
+    "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.3",
+    "style-loader": "^3.3.2"
+  }
+}
