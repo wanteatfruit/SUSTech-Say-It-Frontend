@@ -19,9 +19,9 @@ import {
   Skeleton,
   SkeletonText,
 } from "@chakra-ui/react";
-import { graduationInfo } from "./graduation/graduationInfo";
-import { chatSpaceInfo } from "./chat/chatInfo";
-import { courseSpaceInfo } from "./course/courseInfo";
+import { graduationInfo } from "../lib/graduationInfo";
+import { chatSpaceInfo } from "../lib/chatInfo";
+import { courseSpaceInfo } from "../lib/courseInfo";
 import { useState, useEffect } from "react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { postInterface } from "@/interfaces/postInterface";

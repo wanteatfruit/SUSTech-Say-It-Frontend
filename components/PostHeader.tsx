@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import { postInterface } from "@/interfaces/postInterface";
 import {
   Button,

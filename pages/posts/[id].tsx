@@ -30,7 +30,7 @@ import RelatedPosts from "@/components/posts/RelatedPosts";
 import { getPostByID, getCommentsBypostID, addViewCount } from "../api/PostAPI";
 import { postInterface } from "@/interfaces/postInterface";
 import { commentInterface } from "@/interfaces/commentInterface";
-import { relatedPost } from "./relatedPost";
+import { relatedPost } from "../../lib/relatedPost";
 import BackToTopButton from "@/components/BackToTop";
 import Summarize from "@/components/side-plugins/Summarize";
 import { AiOutlineSend } from "react-icons/ai";
@@ -38,12 +38,12 @@ import {RiSendPlaneLine, RiSpyLine} from 'react-icons/ri'
 
 export default function Post() {
   const router = useRouter();
-  const id = router.query.id;
+  const id = router.query.id===null?"":router.query.id;
   const [isLoadingPost, setIsLoadingPost] = useState(true);
   const [isLoadingComment, setIsLoadingComment] = useState(true);
   const [content_value, setContent] = useState("");
-  const [mainPost, setMainPost] = useState<NonNullable<postInterface>>();
-  const [Comments, setComments] = useState<commentInterface[]>();
+  const [mainPost, setMainPost] = useState<NonNullable<postInterface>>(null);
+  const [Comments, setComments] = useState<commentInterface[]>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoading_anonymous, setIsLoading_anonymous] = useState(false);
   const [isLoadingRelated, setIsLoadingRelated] = useState(true);
@@ -52,10 +52,7 @@ export default function Post() {
     { id: "", post_id: 0, score: 0, title: "" },
   ]);
 
-  let userID = 0;
-  if (router.isFallback) {
-    return <h1>Loading</h1>;
-  }
+  let userid = 0;
   useEffect(() => {
     //get the post content
     async function fetchUserPosts(id: string) {

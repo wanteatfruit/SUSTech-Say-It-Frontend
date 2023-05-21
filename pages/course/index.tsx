@@ -20,7 +20,7 @@ import Footer from "@/components/Footer";
 import styles from "../../styles/pagination.module.css";
 import MapPage from "@/components/side-plugins/UniversityMap";
 import MapPlugin from "@/components/side-plugins/UniversityMap";
-import { courseSpaceInfo } from "./courseInfo";
+import { courseSpaceInfo } from "../../lib/courseInfo";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { postInterface } from "@/interfaces/postInterface";
 import { getPostsBySpace } from "../api/PostAPI";

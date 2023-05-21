@@ -21,7 +21,7 @@ import SpaceCard from "@/components/spaces/SpaceCard";
 import PostHeader from "@/components/PostHeader";
 import Footer from "@/components/Footer";
 import MapPlugin from "@/components/side-plugins/UniversityMap";
-import { graduationInfo } from "./graduationInfo";
+import { graduationInfo } from "../../lib/graduationInfo";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { postInterface } from "@/interfaces/postInterface";
 import { getPostsBySpace } from "../api/PostAPI";

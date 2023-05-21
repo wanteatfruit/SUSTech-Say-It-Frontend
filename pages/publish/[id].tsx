@@ -32,7 +32,7 @@ import { milvusData } from "@/interfaces/milvusInterface";
 import { useDisclosure } from "@chakra-ui/react";
 import { FaUserSecret } from "react-icons/fa";
 import { RiSendPlaneLine, RiSpyLine } from "react-icons/ri";
-export default function publish({ postData }) {
+export default function Publish({ postData }) {
   const [title_value, setTitle] = useState("");
   const [content_value, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);

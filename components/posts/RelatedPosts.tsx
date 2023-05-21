@@ -1,4 +1,4 @@
-import { relatedPost } from "@/pages/posts/relatedPost";
+import { relatedPost } from "@/lib/relatedPost";
 import {
   Card,
   CardBody,
@@ -27,7 +27,7 @@ export default function RelatedPosts(posts:relatedPost[]) {
         </CardHeader>
         <CardBody>
           <UnorderedList>
-            {posts.map((item)=>(
+            {posts!==undefined && posts!==null && posts.map((item)=>(
               <ListItem key={item.id} >
                 <Link>{item.title}</Link>
               </ListItem>

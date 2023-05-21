@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import {
   Text,
   Avatar,

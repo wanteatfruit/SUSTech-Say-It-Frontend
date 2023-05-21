@@ -110,7 +110,7 @@ export default function MapPlugin({ isOpen, onClose }: props) {
           rel="stylesheet"
         />
       </Head>
-      <script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.min.js"></script>
+      {/* <script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.min.js"></script> */}
       <link
         rel="stylesheet"
         href="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.css"

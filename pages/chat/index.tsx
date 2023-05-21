@@ -20,7 +20,7 @@ import Footer from "@/components/Footer";
 import styles from "../../styles/pagination.module.css";
 import MapPage from "@/components/side-plugins/UniversityMap";
 import MapPlugin from "@/components/side-plugins/UniversityMap";
-import { chatSpaceInfo } from "./chatInfo";
+import { chatSpaceInfo } from "../../lib/chatInfo";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { postInterface } from "@/interfaces/postInterface";
 import { getPostsBySpace } from "../api/PostAPI";

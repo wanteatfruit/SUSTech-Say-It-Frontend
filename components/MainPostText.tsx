@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import {
   Text,
   Avatar,
@@ -70,6 +71,10 @@ export default function MainPost({
   useEffect(() => {
     // checkToxic();
 
+    if(userid===undefined){
+      return;
+    }
+
     getUserByID(userid).then((res) => {
       setAvatar(res.avatar);
       setUserName(res.username);
@@ -81,7 +86,7 @@ export default function MainPost({
       setIsFav(res.fav);
       console.log(isFav)
     });
-  }, [id, userid]);
+  }, []);
 
   async function checkToxic() {
     await axios.get(`/api/gpt?type=toxicity&post_id=${id}`).then((res) => {
@@ -251,7 +256,7 @@ export default function MainPost({
             )}
           </HStack>
         </HStack>
-        <Favorite id={id.toString()} fav={isFav} />
+        <Favorite id={id===undefined?"0": id.toString()} fav={isFav} />
       </CardFooter >
     </Card>
   );
