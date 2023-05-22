@@ -128,7 +128,10 @@ export default function MainPost({
         </HStack>
       </CardHeader>
       <CardBody mx={2} fontSize="lg">
-        <VStack align="flex-start" spacing="7" ml='7%'>
+        <VStack align="flex-start" spacing="7" ml='7%' css={{'& img':{
+          'max-height':'50vh',
+          'max-width':'50vw',
+        }}}>
           {/* <Heading fontSize="2xl" fontFamily="var(--font-post-title)">
             {title}
           </Heading> */}

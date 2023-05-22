@@ -234,6 +234,9 @@ export default function PostHeader({
                 "& img": {
                   maxHeight: "10vh",
                 },
+                "& code":{
+                  maxWidth:'50vw'
+                },
               }}
               overflow="hidden"
               maxHeight="30vh"

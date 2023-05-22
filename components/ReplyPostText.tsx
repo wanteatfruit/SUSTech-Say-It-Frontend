@@ -72,7 +72,12 @@ export default function ReplyPostCard({
             <Text textStyle="h1">{dayjs(time).fromNow()}</Text>
           </HStack>
         </CardHeader>
-        <CardBody mx='4%'>
+        <CardBody mx='4%'           css={{
+            "& img": {
+              maxHeight: "10vh",
+            },
+            maxWidth:'50vw'
+          }}>
           <ReactMarkdown rehypePlugins={[rehypeRaw]} children={content} />
         </CardBody>
         {/* <CardFooter mx={0} mt={1} pt={0} justify="space-between">
