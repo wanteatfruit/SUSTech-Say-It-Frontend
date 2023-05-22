@@ -86,7 +86,7 @@ export default function Main({
       }
     }
 
-    getRecommend();
+    // getRecommend();
 
   },[] )
 
@@ -180,7 +180,6 @@ export default function Main({
               value={filter}
             >
               <HStack>
-                <Radio value="recommend">推荐 </Radio>
                 <Radio value="hot">热门</Radio>
                 <Radio value="new">最新</Radio>
                 <Radio value="best">最受好评</Radio>

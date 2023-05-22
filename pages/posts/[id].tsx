@@ -256,7 +256,7 @@ export default function Post() {
                       {/* {!isLoadingPost && (
                         <SpaceCard RouteName={mainPost.rou} spaceID={mainPost.spaceid}/>
                       )} */}
-                      <SkeletonText width="100%" isLoaded={!isLoadingRelated}>
+                      {/* <SkeletonText width="100%" isLoaded={!isLoadingRelated}>
                         <Card>
                           <CardHeader>
                             <Text fontSize="2xl" fontWeight="600">
@@ -278,7 +278,7 @@ export default function Post() {
                       </SkeletonText>
                       <SkeletonText width='100%' isLoaded={!isLoadingPost}>
                         <Summarize title={mainPost?.title} post_id={mainPost?.id} />
-                      </SkeletonText>
+                      </SkeletonText> */}
                     </VStack>
                   </Box>
                 </Flex>
