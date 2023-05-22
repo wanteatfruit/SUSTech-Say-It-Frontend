@@ -36,19 +36,16 @@ export default async function handler(
       raw_text =req.query.text as string;
     }
     console.log(raw_text)
+    const proxy = process.env.NODE_ENV == "production" ? {} : {
+      host: "127.0.0.1",
+      port: 7890,
+    }
     const tox_response = await openai.createChatCompletion(
       {
         model: "gpt-3.5-turbo",
         // messages: [{ role: "user", content: `How is UCLA as a` }],
         messages: [{ role: "user", content: `${toxicity_prompt} ${title}。${raw_text}` }],
       },
-      {
-        timeout: 100000,
-        proxy: {
-          host: "127.0.0.1",
-          port: 7890,
-        },
-      }
     );
     console.log(tox_response.data.choices[0].message?.content);
     res

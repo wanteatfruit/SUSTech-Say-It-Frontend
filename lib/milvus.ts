@@ -12,7 +12,8 @@ console.info("Connecting to milvus");
 
 const { uri, user, password, secure } = mconfig;
 if(process.env.NODE_ENV=='production'){
-    milvus = new MilvusClient("localhost:19530");
+    milvus = new MilvusClient("118.195.181.111:19530");
+    // milvus = null;
 }else{
     if(!global.milvus){
         console.log("No milvus available, creating new milvus.");

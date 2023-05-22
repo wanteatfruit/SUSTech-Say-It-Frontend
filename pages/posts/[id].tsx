@@ -78,14 +78,7 @@ export default function Post() {
       try {
         await axios.get(`../api/milvus?post_id=${id}`).then((resp) => {
           const data = resp.data;
-          setRelatedPosts(data);
-          setIsLoadingComment(false); //refresh
-          var arr = [];
-          //push data into arr
-          for (var i = 0; i < 5; i++) {
-            arr.push(data[i]);
-          }
-          setRelatedPosts(arr);
+          setRelatedPosts(data.slice(0,5));
           setIsLoadingRelated(false);
         });
       } catch (error) {
