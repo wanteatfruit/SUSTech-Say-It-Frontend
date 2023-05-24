@@ -234,7 +234,7 @@ export default function Main({
               ))}
           </VStack>
         </Flex>
-        <Footer />
+        {/* <Footer /> */}
       </Flex>
     </>
   );
