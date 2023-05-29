@@ -72,25 +72,6 @@ export default function Main({
   const [recommendPost, setRecommendPost] =
     useState<postInterface[]>(byVote);
 
-  useEffect(()=>{
-    async function getRecommend(){
-      if (typeof window !== 'undefined') {
-        const user_id =  localStorage.getItem("userId");
-        if(user_id===undefined){
-          return;
-        }
-        const recommendPost = await axios.get(`/api/milvus?type=recommendation&user_id=${user_id}}`);
-        let recommendData = recommendPost.data;
-        if (recommendPost.data.length > 0) {
-          setRecommendPost(recommendData);
-        }
-      }
-    }
-
-    // getRecommend();
-
-  },[] )
-
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(true);

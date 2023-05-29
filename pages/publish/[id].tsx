@@ -68,13 +68,13 @@ export default function Publish({ postData }) {
 
       const post_id = response.data.id;
 
-      const mr = await axios.post<milvusData>("/api/milvus", {
-        id: response.data.id,
-        title: title_value,
-        text: raw_text,
-      });
+      // const mr = await axios.post<milvusData>("/api/milvus", {
+      //   id: response.data.id,
+      //   title: title_value,
+      //   text: raw_text,
+      // });
 
-      console.log(mr.status);
+      // console.log(mr.status);
 
       // 跳转到刚发布的帖子界面
       window.location.href = `/posts/${response.data.id}`;
