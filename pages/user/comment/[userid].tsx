@@ -55,7 +55,7 @@ export default function UserComments() {
   }
 
   return (
-    <Box>
+    <Box mb={10} mt="150px">
       <Navbar />
       <SubNavUser />
       <div style={{ height: "20px" }}></div>

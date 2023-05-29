@@ -1,6 +1,19 @@
-import { Box, Flex, Avatar, Text, Button, Link } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Avatar,
+  Text,
+  Button,
+  Link,
+  useToast,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import {
+  addToFollow,
+  removeFromFollow,
+  getUserFollowStatus,
+} from "@/pages/api/UserAPI"; // import the user_axios module
 
 interface UserCardProps {}
 
@@ -15,12 +28,13 @@ const UserCard: React.FC<UserCardProps> = () => {
   const [userId, setUserId] = useState<string>("");
   const [shouldRenderEditProfileButton, setShouldRenderEditProfileButton] =
     useState<boolean>(false);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false); // new state variable
+
+  const toast = useToast();
+
+  const { userid } = router.query; // move declaration outside of useEffect
 
   useEffect(() => {
-    // 从路由中获取userid
-    const { userid } = router.query;
-    console.log("userid from router.query: " + userid);
-
     const userIdFromLocalStorage = localStorage.getItem("userId");
     setUserId(userIdFromLocalStorage);
 
@@ -60,31 +74,94 @@ const UserCard: React.FC<UserCardProps> = () => {
     fetchFollowing();
 
     setShouldRenderEditProfileButton(userid === userIdFromLocalStorage);
-  }, []);
+
+    getUserFollowStatus(userid).then((res) => {
+      console.log("getUserFollowStatus userid: " + userid);
+      console.log("getUserFollowStatus: " + res);
+      setIsFollowing(res);
+    });
+  }, [userid]); // use userid as a dependency
 
   const handleFollowersClick = () => {
-    const { userid } = router.query;
     console.log("Userfollower for: " + userid);
     router.push(`/user/userfollowers/${userid}`);
   };
 
   const handleFollowingClick = () => {
-    const { userid } = router.query;
     router.push(`/user/userfollowing/${userid}`);
   };
 
   const handleEditProfileClick = () => {
-    const { userid } = router.query;
     const userIdFromLocalStorage = localStorage.getItem("userId");
     if (userid === userIdFromLocalStorage) {
       router.push(`/user/edit/${userid}`);
     }
   };
 
+  const handleFollowClick = async () => {
+    if (localStorage.getItem("userId") !== null) {
+      try {
+        if (isFollowing) {
+          // unfollow user
+          console.log("unfollow user");
+          removeFromFollow(userid)
+            .then((res) => {
+              if (res) {
+                setIsFollowing(false);
+                toast({
+                  title: "取关成功",
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                });
+              } else {
+                console.log("unfollow user failed");
+              }
+              console.log("res: " + res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          // follow user
+          console.log("follow user");
+          addToFollow(userid)
+            .then((res) => {
+              if (res) {
+                setIsFollowing(true);
+                toast({
+                  title: "关注成功",
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                });
+              } else {
+                console.log("follow user failed");
+              }
+              console.log("res: " + res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+        router.reload();
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      toast({
+        title: "请先登录",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <Box
       maxW="lg"
-      border='1px solid var(--minimal-2)'
+      border="1px solid var(--minimal-2)"
       // border='1px solid #e2e8f0'
       borderRadius="lg"
       overflow="hidden"
@@ -126,6 +203,18 @@ const UserCard: React.FC<UserCardProps> = () => {
                 ml="auto"
               >
                 编辑个人资料
+              </Button>
+            )}
+            {!shouldRenderEditProfileButton && (
+              <Button
+                variant="outline"
+                size="md"
+                onClick={handleFollowClick}
+                border="none"
+                ml="auto"
+                colorScheme="pink"
+              >
+                {isFollowing ? "取关" : "关注"}
               </Button>
             )}
           </Flex>

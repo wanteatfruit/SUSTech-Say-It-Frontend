@@ -4,9 +4,9 @@ import { Box, Flex, HStack, VStack } from "@chakra-ui/react";
 import Navbar from "@/components/Navbar";
 import SubNavUser from "@/components/SubNavUser";
 import UserCard from "@/components/user-center/UserCard";
-import PostHeader from "@/components/PostHeader";
 import { postInterface } from "@/interfaces/postInterface";
 import StatusIndicator from "@/components/StatusIndicator";
+import PostHeaderInUserCenter from "@/components/user-center/PostHeaderInUserCenter";
 
 export default function UserPosts() {
   const router = useRouter();
@@ -55,7 +55,7 @@ export default function UserPosts() {
   }
 
   return (
-    <Box mb={10}>
+    <Box mb={10} mt="150px">
       <Navbar />
       <SubNavUser />
       <div style={{ height: "20px" }}></div>
@@ -67,7 +67,7 @@ export default function UserPosts() {
                 <VStack width="100%">
                   <UserCard />
                   {userPosts.map((post) => (
-                    <PostHeader key={post.id} {...post} />
+                    <PostHeaderInUserCenter key={post.id} {...post} />
                   ))}
                 </VStack>
               </Flex>

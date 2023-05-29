@@ -33,26 +33,26 @@ import { commentInterface } from "@/interfaces/commentInterface";
 import { relatedPost } from "../../lib/relatedPost";
 import BackToTopButton from "@/components/BackToTop";
 import Summarize from "@/components/side-plugins/Summarize";
-import { AiOutlineSend } from "react-icons/ai";
-import {RiSendPlaneLine, RiSpyLine} from 'react-icons/ri'
-
+import { RiSendPlaneLine, RiSpyLine } from "react-icons/ri";
+import Fuse from "fuse.js";
+import { sortByDate } from "../api/PostAPI";
 export default function Post() {
   const router = useRouter();
-  const id = router.query.id===null?"":router.query.id;
+  const id = router.query.id;
   const [isLoadingPost, setIsLoadingPost] = useState(true);
   const [isLoadingComment, setIsLoadingComment] = useState(true);
   const [content_value, setContent] = useState("");
-  const [mainPost, setMainPost] = useState<NonNullable<postInterface>>(null);
-  const [Comments, setComments] = useState<commentInterface[]>(null);
+  const [mainPost, setMainPost] = useState<NonNullable<postInterface>>();
+  const [Comments, setComments] = useState<commentInterface[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoading_anonymous, setIsLoading_anonymous] = useState(false);
   const [isLoadingRelated, setIsLoadingRelated] = useState(true);
   const [error, setError] = useState("");
-  const [relatedPosts, setRelatedPosts] = useState<NonNullable<relatedPost[]>>([
-    { id: "", post_id: 0, score: 0, title: "" },
+  const [relatedPosts, setRelatedPosts] = useState<NonNullable<postInterface[]>>([
+   
   ]);
 
-  let userid = 0;
+  let userID = 0;
   useEffect(() => {
     //get the post content
     async function fetchUserPosts(id: string) {
@@ -62,6 +62,7 @@ export default function Post() {
         const data: postInterface = await getPostByID(id);
         const Commentsdata: commentInterface[] = await getCommentsBypostID(id);
         setMainPost(data);
+        addViewCount(mainPost?.title);
         setComments(Commentsdata);
         console.log(data);
         console.log(Commentsdata);
@@ -70,24 +71,25 @@ export default function Post() {
       }
       setIsLoadingPost(false);
       setIsLoadingComment(false);
-      addViewCount(mainPost?.title);
     }
 
     async function fetchRelated(id: string) {
       setIsLoadingRelated(true);
       try {
-        await axios.get(`../api/milvus?post_id=${id}`).then((resp) => {
-          const data = resp.data;
-          setRelatedPosts(data.slice(0,5));
-          setIsLoadingRelated(false);
-        });
+        const data = await sortByDate();
+        console.log(data);
+        const searchText = mainPost?.title;
+        console.log(searchText)
+        const fuse = new Fuse(data, {keys:["title"]});
+        const result = fuse.search(searchText).slice(1, 6);
+        // setRelatedPosts(result.map((result) => result.item));
+        console.log(result);
+        setRelatedPosts(result.map((result) => result.item));
+        setIsLoadingRelated(false);
       } catch (error) {
         return;
       }
-    
     }
-
-
 
     if (router.isReady) {
       setIsLoadingPost(true);
@@ -97,10 +99,11 @@ export default function Post() {
 
       // const data = getPostByID(id);
     }
-  }, [router.isReady]);
+  }, [router.isReady, mainPost?.title]);
 
-
-  const handleSubmit_anonymous = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit_anonymous = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault(); // Prevent default form submission behavior
     // const userID=localStorage.getItem("accessToken");
     setIsLoading_anonymous(true);
@@ -137,7 +140,7 @@ export default function Post() {
     setIsLoading(true);
     setError("");
 
-    if (localStorage.getItem("userId") === null) {
+    if (localStorage.getItem("userId") === null || localStorage.getItem("userId") === undefined) {
       alert("请先登录");
       setIsLoading(false);
       return;
@@ -195,19 +198,18 @@ export default function Post() {
                           content={mainPost.content}
                           userid={mainPost.userid}
                           spaceid={mainPost.spaceid}
-                          id={mainPost?.id}
+                          id={mainPost.id === undefined ? "" : mainPost.id}
                         />
                       )}
                     </Box>
-                    <Divider size='xl' pb={0} />
+                    <Divider size="xl" pb={0} />
                     <HStack mt={0}>
-                      <TextInput  value={content_value} setValue={setContent} />
-                      
+                      <TextInput value={content_value} setValue={setContent} />
                     </HStack>
                     {/* <Text>{content_value}</Text>
                     <Text>aaa</Text>
                     <Text>{content_value.replaceAll("<p><br></p>", "")}</Text> */}
-                    <Stack direction='row' spacing={4} align='center'>
+                    <Stack direction="row" spacing={4} align="center">
                       <Button
                         variant="solid"
                         rightIcon={<RiSendPlaneLine />}
@@ -219,12 +221,11 @@ export default function Post() {
                       </Button>
                       <Button
                         variant="solid"
-                        colorScheme='blackAlpha'
-                        rightIcon = {<RiSpyLine />}
+                        colorScheme="blackAlpha"
+                        rightIcon={<RiSpyLine />}
                         isLoading={isLoading_anonymous}
                         loadingText="发送中..."
                         onClick={handleSubmit_anonymous}
-
                       >
                         匿名发送
                       </Button>
@@ -256,7 +257,7 @@ export default function Post() {
                       {/* {!isLoadingPost && (
                         <SpaceCard RouteName={mainPost.rou} spaceID={mainPost.spaceid}/>
                       )} */}
-                      {/* <SkeletonText width="100%" isLoaded={!isLoadingRelated}>
+                      <SkeletonText width="100%" isLoaded={!isLoadingRelated}>
                         <Card>
                           <CardHeader>
                             <Text fontSize="2xl" fontWeight="600">
@@ -265,9 +266,12 @@ export default function Post() {
                           </CardHeader>
                           <CardBody pt={2}>
                             <UnorderedList spacing={3}>
+                              {relatedPosts.length === 0 && (
+                                <ListItem>暂无相关贴子</ListItem>
+                              )}
                               {relatedPosts.map((post) => (
-                                <ListItem key={post.post_id}>
-                                  <Link fontSize="lg" href={`${post.post_id}`}>
+                                <ListItem key={post.id}>
+                                  <Link fontSize="lg" href={`${post.id}`}>
                                     {post.title}
                                   </Link>
                                 </ListItem>
@@ -276,8 +280,11 @@ export default function Post() {
                           </CardBody>
                         </Card>
                       </SkeletonText>
-                      <SkeletonText width='100%' isLoaded={!isLoadingPost}>
-                        <Summarize title={mainPost?.title} post_id={mainPost?.id} />
+                      {/* <SkeletonText width="100%" isLoaded={!isLoadingPost}>
+                        <Summarize
+                          title={mainPost?.title}
+                          post_id={mainPost?.id}
+                        />
                       </SkeletonText> */}
                     </VStack>
                   </Box>

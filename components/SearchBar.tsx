@@ -90,6 +90,7 @@ export default function SearchBar() {
             boxShadow: "4px",
             fontFamily: "Roboto",
             hoverBackgroundColor: "var(--minimal-2)",
+            zIndex: 99999,
           }}
         ></ReactSearchAutocomplete>
       )}

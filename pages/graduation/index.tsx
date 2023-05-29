@@ -187,10 +187,10 @@ export default function Space({
                       <HStack>
                         <Button
                           width="100%"
-                          colorScheme='facebook'
-                          // bgColor="var(--minimal-2)"
-                          // _hover={{ bgColor: "var(--minimal-3)" }}
-                          // _focus={{ bgColor: "var(--minimal-4)" }}
+                          // colorScheme='facebook'
+                          bgColor="var(--minimal-2)"
+                          _hover={{ bgColor: "var(--minimal-3)" }}
+                          _focus={{ bgColor: "var(--minimal-4)" }}
 
                           textColor="white"
                           onClick={onOpen}
@@ -199,8 +199,9 @@ export default function Space({
                         </Button>
                         <Button
                           width="100%"
-                          colorScheme='orange'
-                          textColor="white"
+                          // colorScheme='orange'
+                          
+                          // textColor="white"
                           onClick={onRankOpen}
                         >
                           学校排名

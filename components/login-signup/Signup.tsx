@@ -81,7 +81,7 @@ export const Signup = () => {
       }
 
       toast({
-        title: `${username} 注册成功！`,
+        title: `用户 ${username} 注册成功！`,
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -150,9 +150,9 @@ export const Signup = () => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </Stack>
-            <HStack justify="space-between">
+            {/* <HStack justify="space-between">
               <Checkbox defaultChecked>同意用户相关条款</Checkbox>
-            </HStack>
+            </HStack> */}
 
             <Stack spacing="6">
               <Button
@@ -171,14 +171,14 @@ export const Signup = () => {
                   {error}
                 </Text>
               )}
-              <HStack>
+              {/* <HStack>
                 <Divider />
                 <Text fontSize="sm" whiteSpace="nowrap" color="muted">
                   可使用以下方式注册
                 </Text>
                 <Divider />
               </HStack>
-              <OAuthButtonGroup />
+              <OAuthButtonGroup /> */}
             </Stack>
           </Stack>
         </Box>

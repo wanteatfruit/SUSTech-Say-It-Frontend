@@ -54,30 +54,37 @@ export default function ReplyPostCard({
   const [animateScoreDown, setAnimateScoreDown] = useState(false);
   const [avatar, setAvatar] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     getUserByID(userid).then((res) => {
       setAvatar(res.avatar);
     });
-  })
+  });
 
   return (
     <>
-      <Card my={3}  ml={2} variant="elvated" width="100%">
+      <Card my={3} ml={2} variant="elvated" width="100%">
         <CardHeader m={0} py={0}>
           <HStack justifyContent="space-between">
             <HStack spacing={2}>
-              <Avatar size="sm" src={avatar} _hover={{ cursor: "pointer" }}></Avatar>
+              <Avatar
+                size="sm"
+                src={avatar}
+                _hover={{ cursor: "pointer" }}
+              ></Avatar>
               <Text role="username">{username}</Text>
             </HStack>
             <Text textStyle="h1">{dayjs(time).fromNow()}</Text>
           </HStack>
         </CardHeader>
-        <CardBody mx='4%'           css={{
+        <CardBody
+          css={{
             "& img": {
               maxHeight: "10vh",
             },
             maxWidth:'50vw'
-          }}>
+          }}
+          mx="4%"
+        >
           <ReactMarkdown rehypePlugins={[rehypeRaw]} children={content} />
         </CardBody>
         {/* <CardFooter mx={0} mt={1} pt={0} justify="space-between">
@@ -182,7 +189,7 @@ export default function ReplyPostCard({
         </CardFooter> */}
         {/* <Divider /> */}
       </Card>
-      <Divider/>
+      <Divider />
     </>
   );
 }

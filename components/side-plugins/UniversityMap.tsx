@@ -16,6 +16,7 @@ import cheerio from "cheerio";
 import { useEffect, useRef } from "react";
 import maplibregl from "maplibre-gl";
 import Head from "next/head";
+import Script from "next/script";
 // import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder';
 interface props {
   onClose: () => void;
@@ -109,8 +110,9 @@ export default function MapPlugin({ isOpen, onClose }: props) {
           href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
           rel="stylesheet"
         />
+
       </Head>
-      {/* <script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.min.js"></script> */}
+      <Script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.min.js"></Script>
       <link
         rel="stylesheet"
         href="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.css"

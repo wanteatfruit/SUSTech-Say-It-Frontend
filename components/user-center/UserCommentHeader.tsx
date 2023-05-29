@@ -14,6 +14,7 @@ import {
   ButtonGroup,
   IconButton,
   Divider,
+  Link,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -30,6 +31,8 @@ import { addUpVote, addDownVote } from "@/pages/api/PostAPI";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { commentInterface } from "@/interfaces/commentInterface";
+import { getUserByID } from "@/pages/api/UserAPI";
+import axios from "axios";
 var rel = require("dayjs/plugin/relativeTime");
 dayjs.locale("zh-cn");
 dayjs.extend(rel);
@@ -51,137 +54,78 @@ export default function ReplyPostCard({
   const prevScore = useRef(score); //for animation
   const [animateScoreUp, setAnimateScoreUp] = useState(false);
   const [animateScoreDown, setAnimateScoreDown] = useState(false);
+  const [avatar, setAvatar] = useState("");
+  const [postTitle, setPostTitle] = useState("");
+
+  useEffect(() => {
+    getUserByID(userid).then((res) => {
+      setAvatar(res.avatar);
+    });
+
+    // Make HTTP request to fetch post title
+    axios
+      .get(`http://120.25.216.186:8888/post/getpostbyid?postid=${postid}`)
+      .then((response) => {
+        setPostTitle(response.data.title);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
-      <Box
-        borderWidth="0px"
-        borderRadius="lg"
-        overflow="hidden"
-        mb={1}
-        ml={2}
-        variant="eleated"
+      <Link
         width="100%"
+        _hover={{ textDecoration: "none" }}
+        href={`/posts/${postid}`}
       >
-        <Card mb={0} ml={2} variant="eleated" width="100%">
-          <CardHeader m={0} py={0}>
-            <HStack justifyContent="space-between">
-              <HStack spacing={2}>
-                <Avatar size="sm" _hover={{ cursor: "pointer" }}></Avatar>
-                <Text role="username">{username}</Text>
-              </HStack>
-              <Text textStyle="h1">{dayjs(time).fromNow()}</Text>
-            </HStack>
-          </CardHeader>
-          <CardBody mx={5}>
+        <Card
+          dropShadow="md"
+          boxShadow="md "
+          as={motion.div}
+          whileInView={{ filter: "brightness(100%)" }}
+          whileHover={{ y: -3.01, filter: "brightness(95%)" }}
+          // whileHover={{ y: -3.01, border: "1px solid var(--minimal-2)", color:'white', backgroundColor:'var(--minimal-2)', transition:'all 0.01s ease-in-out' }}
+          whileTap={{ scale: 0.99 }}
+          width="100%"
+          // variant="elevated"
+          maxHeight={300}
+          minHeight={100}
+          zIndex="1"
+          pr={10}
+        >
+          <CardBody
+            css={{
+              "& img": {
+                maxHeight: "10vh",
+              },
+            }}
+            overflow="hidden"
+            maxHeight="30vh"
+            textColor="transparent"
+            background="linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(255, 255, 255, 0))"
+            bgClip="text"
+          >
+            <Heading as="h2" size="md" mb={2}>
+              {postTitle}
+            </Heading>
             <ReactMarkdown rehypePlugins={[rehypeRaw]} children={content} />
           </CardBody>
-          <CardFooter mx={0} pt={0} justify="space-between">
-            <HStack>
-              <HStack spacing={4}>
-                {upvoted ? (
-                  <IconButton
-                    as={motion.div}
-                    border="0"
-                    whileTap={{ scale: 1.2 }}
-                    onClick={() => {
-                      setUpvoted(!upvoted);
-                      setAnimateScoreDown(true);
-                      // addDownVote(title);
-                      setDownVoted(false);
-                      setScore(prevScore.current);
-                      console.log(prevScore);
-                    }}
-                    variant="link"
-                    colorScheme="red"
-                    cursor="pointer"
-                    aria-label="upvote_button"
-                    icon={<TbArrowBigUpLineFilled size="1.25em" />}
-                  ></IconButton>
-                ) : (
-                  <IconButton
-                    as={motion.div}
-                    border="0"
-                    whileTap={{ scale: 1.2 }}
-                    variant="link"
-                    colorScheme="black"
-                    cursor="pointer"
-                    onClick={async () => {
-                      setUpvoted(!upvoted);
-                      // addUpVote(title);
-                      setAnimateScoreUp(true);
-                      console.log(prevScore);
-                      setDownVoted(false);
-                      setScore(prevScore.current + 1);
-                    }}
-                    aria-label="upvote_button"
-                    icon={<TbArrowBigUpLine size="1.25em" />}
-                  ></IconButton>
-                )}
-                <motion.div
-                  animate={{
-                    y: animateScoreUp
-                      ? [0, -20, 20]
-                      : animateScoreDown
-                      ? [0, 20, -20]
-                      : 0,
-                    // y: animateScoreDown? []
-                    opacity:
-                      animateScoreUp || animateScoreDown ? [0.6, 0, 0] : 1,
-                  }}
-                  transition={{ duration: 0.2, ease: "backOut" }}
-                  onAnimationComplete={() => {
-                    setAnimateScoreUp(false);
-                    setAnimateScoreDown(false);
-                  }}
-                >
-                  <Text>{score}</Text>
-                </motion.div>
-                {downvoted ? (
-                  <IconButton
-                    as={motion.div}
-                    border="0"
-                    whileTap={{ scale: 1.2 }}
-                    onClick={() => {
-                      setDownVoted(!downvoted);
-                      setUpvoted(false);
-                      setAnimateScoreUp(true);
-                      // addUpVote(title);
-                      setScore(prevScore.current);
-                    }}
-                    variant="link"
-                    colorScheme="purple"
-                    cursor="pointer"
-                    aria-label="upvote_button"
-                    icon={<TbArrowBigDownLineFilled size="1.25em" />}
-                  ></IconButton>
-                ) : (
-                  <IconButton
-                    as={motion.div}
-                    border="0"
-                    whileTap={{ scale: 1.2 }}
-                    variant="link"
-                    colorScheme="black"
-                    cursor="pointer"
-                    onClick={() => {
-                      setDownVoted(true);
-                      setUpvoted(false);
-                      // addDownVote(title);
-                      setAnimateScoreDown(true);
-                      setScore(prevScore.current - 1);
-                    }}
-                    aria-label="upvote_button"
-                    icon={<TbArrowBigDownLine size="1.25em" />}
-                  ></IconButton>
-                )}
-              </HStack>
-            </HStack>
+          <CardFooter
+            mt={0}
+            pt={0}
+            textColor={"gray.300"}
+            fontSize={"xs"}
+            justify={"end"}
+          >
+            <Text textAlign={"right"} textStyle="h1">
+              {dayjs(time).fromNow()}
+            </Text>
           </CardFooter>
-          {/* <Divider /> */}
         </Card>
-      </Box>
+      </Link>
       <Divider />
-      <br />
     </>
   );
 }

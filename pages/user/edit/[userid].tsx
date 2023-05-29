@@ -30,24 +30,25 @@ const UserProfile = () => {
   const { userid } = router.query;
   console.log("userid: " + userid);
   useEffect(() => {
-    if(router.isReady){
+    if (router.isReady) {
       axios
-      .get(`http://120.25.216.186:8888/users/getUserById?id=${userid}`)
-      .then((response) => {
-        setUserData(response.data);
-        setUsernameValue(userData.username);
-        setEmailValue(userData.email);
-        setIntroductionValue(userData.introduction);
-        setPasswordValue(userData.password);
-        setAvatarValue(userData.avatar);
-        setIsLoading(false);
-
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
-
+        .get(`http://120.25.216.186:8888/users/getUserById?id=${userid}`)
+        .then((response) => {
+          setUserData(response.data);
+          setIsLoading(false);
+          setUsernameValue(userData.username);
+          setEmailValue(userData.email);
+          setIntroductionValue(userData.introduction);
+          setPasswordValue(userData.password);
+          setAvatarValue(userData.avatar);
+          console.log("response.data: " + response.data);
+          console.log("userData: " + userData);
+          console.log("usernameValue: " + usernameValue);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
     }
   }, [userid, router.isReady]);
 
@@ -98,7 +99,7 @@ const UserProfile = () => {
 
   return (
     <VStack
-    overflow="hidden"
+      overflow="hidden"
       boxShadow="md"
       justifyContent="center"
       borderRadius="lg"
@@ -112,13 +113,16 @@ const UserProfile = () => {
       px={4}
       py={12}
     >
-      <Text fontSize='2xl'  textAlign='left' >修改资料</Text>
+      <Text fontSize="2xl" textAlign="left">
+        修改资料
+      </Text>
       <HStack justifyContent="center" width="100%">
         <Text fontWeight="bold">昵称:</Text>
         <Input
           width="80%"
           readOnly={!isEditing}
-          value={usernameValue}
+          // value={usernameValue}
+          defaultValue={userData.username}
           borderColor={isEditing ? "blue.500" : "gray.300"}
           onChange={(event) => {
             setUsernameValue(event.target.value);
@@ -130,10 +134,11 @@ const UserProfile = () => {
         <Input
           width="80%"
           readOnly={!isEditing}
-          value={emailValue}
+          // value={emailValue}
+          defaultValue={userData.email}
           borderColor={isEditing ? "blue.500" : "gray.300"}
           onChange={(event) => {
-            setUsernameValue(event.target.value);
+            setEmailValue(event.target.value);
           }}
         ></Input>
       </HStack>
@@ -147,18 +152,17 @@ const UserProfile = () => {
       </HStack>
       {isEditing ? (
         <HStack justifyContent="center" width="100%">
-                  <Text fontWeight="bold">链接:</Text>
+          <Text fontWeight="bold">链接:</Text>
 
-        <Input
-          width="80%"
-          borderColor={isEditing ? "blue.500" : "gray.300"}
-          value={avatarValue}
-          onChange={(event) => {
-            setAvatarValue(event.target.value);
-          }}
-        />
+          <Input
+            width="80%"
+            borderColor={isEditing ? "blue.500" : "gray.300"}
+            value={avatarValue}
+            onChange={(event) => {
+              setAvatarValue(event.target.value);
+            }}
+          />
         </HStack>
-
       ) : null}
 
       <HStack justifyContent="center" width="100%">
@@ -168,9 +172,10 @@ const UserProfile = () => {
             type={showPassword ? "text" : "password"}
             readOnly={!isEditing}
             borderColor={isEditing ? "blue.500" : "gray.300"}
-            value={passwordValue}
+            defaultValue={userData.password}
+            // value={passwordValue}
             onChange={(event) => {
-              setUsernameValue(event.target.value);
+              setPasswordValue(event.target.value);
             }}
           ></Input>
           <InputRightElement pr={2}>
@@ -186,10 +191,11 @@ const UserProfile = () => {
         <Input
           width="80%"
           readOnly={!isEditing}
-          value={introductionValue}
+          // value={introductionValue}
+          defaultValue={userData.introduction}
           borderColor={isEditing ? "blue.500" : "gray.300"}
           onChange={(event) => {
-            setUsernameValue(event.target.value);
+            setIntroductionValue(event.target.value);
           }}
         ></Input>
       </HStack>
@@ -219,7 +225,7 @@ const UserProfile = () => {
             color="white"
             onClick={handleEdit}
           >
-            编辑
+            开始编辑
           </Button>
         </HStack>
       )}

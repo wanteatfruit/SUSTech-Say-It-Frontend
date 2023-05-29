@@ -53,23 +53,23 @@ export default function Navbar() {
 
   return (
     <Box as="section" position="fixed" top="0" width="100%" zIndex="999">
-      <Link href='/'>
-      <Button
-        size="lg"
-        variant="ghost"
-        fontFamily='Poppins'
-        fontWeight='400'
-        _hover={{bgColor:'white'}}
-        leftIcon={<SiSonarsource strokeWidth="0.5px" fontSize="1.75rem" />}
-        padding={2}
-        color="var(--minimal-2)"
-        aria-label="logo"
-        position="absolute"
-        top="3"
-        left="10"
-      >
-        JUST-SAY-IT
-      </Button>
+      <Link href="/">
+        <Button
+          size="lg"
+          variant="ghost"
+          fontFamily="Poppins"
+          fontWeight="400"
+          _hover={{ bgColor: "white" }}
+          leftIcon={<SiSonarsource strokeWidth="0.5px" fontSize="1.75rem" />}
+          padding={2}
+          color="var(--minimal-2)"
+          aria-label="logo"
+          position="absolute"
+          top="3"
+          left="10"
+        >
+          JUST-SAY-IT
+        </Button>
       </Link>
 
       <SideNavDrawer isOpen={isOpen} onClose={onClose} />
@@ -141,9 +141,11 @@ export default function Navbar() {
                   {localStorage.getItem("userToken") && (
                     <Button
                       variant="ghost"
-                      onClick={() =>
-                        (window.location.href = `/user/send/${userId}`)
-                      }
+                      onClick={() => {
+                        window.location.href = `/user/send/${localStorage.getItem(
+                          "userId"
+                        )}`;
+                      }}
                     >
                       {localStorage.getItem("userToken")}
                     </Button>

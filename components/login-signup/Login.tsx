@@ -113,7 +113,7 @@ export const Login = () => {
             localStorage.setItem("userId", data.id);
             console.log("userId: " + localStorage.getItem("userId"));
             toast({
-              title: `${userToken} 登陆成功！`,
+              title: `用户 ${userToken} 登录成功！`,
               status: "success",
               duration: 2000,
               isClosable: true,
@@ -189,7 +189,7 @@ export const Login = () => {
           <Stack spacing="6">
             <Stack spacing="5">
               <FormControl>
-                <FormLabel htmlFor="usernameOremail">邮箱</FormLabel>
+                <FormLabel htmlFor="usernameOremail">邮箱/用户名</FormLabel>
                 <Input
                   value={usernameOremail}
                   onChange={(event) => {
@@ -206,12 +206,12 @@ export const Login = () => {
                 }}
               />
             </Stack>
-            <HStack justify="space-between">
+            {/* <HStack justify="space-between">
               <Checkbox defaultChecked>记住我</Checkbox>
               <Button variant="link" colorScheme="blue" size="sm">
                 忘记密码？
               </Button>
-            </HStack>
+            </HStack> */}
             <Stack spacing="6">
               <Button
                 variant="solid"
@@ -229,14 +229,14 @@ export const Login = () => {
                   {error}
                 </Text>
               )}
-              <HStack>
+              {/* <HStack>
                 <Divider />
                 <Text fontSize="sm" whiteSpace="nowrap" color="muted">
                   可使用以下方式登录
                 </Text>
                 <Divider />
               </HStack>
-              <OAuthButtonGroup />
+              <OAuthButtonGroup /> */}
             </Stack>
           </Stack>
         </Box>

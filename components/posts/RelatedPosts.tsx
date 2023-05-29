@@ -27,7 +27,7 @@ export default function RelatedPosts(posts:relatedPost[]) {
         </CardHeader>
         <CardBody>
           <UnorderedList>
-            {posts!==undefined && posts!==null && posts.map((item)=>(
+            {posts.map((item)=>(
               <ListItem key={item.id} >
                 <Link>{item.title}</Link>
               </ListItem>

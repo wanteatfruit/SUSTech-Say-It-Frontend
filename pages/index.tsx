@@ -187,7 +187,7 @@ export default function Main({
             </RadioGroup>
           </Box>
           <VStack width="100%" spacing={3}>
-            {filter == "recommend" &&
+            {/* {filter == "recommend" &&
               recommendPost.slice(0, 5).map((post) => (
                 <Skeleton
                   width="100%"
@@ -197,7 +197,7 @@ export default function Main({
                 >
                   <PostHeader key={post.id} {...post} />
                 </Skeleton>
-              ))}
+              ))} */}
             {filter == "hot" &&
               hotPosts.slice(0, 5).map((post) => (
                 <Skeleton

@@ -12,10 +12,7 @@ export default function Favorite({ id, fav }: { id: string, fav:boolean }) {
   },[fav])
 
   async function addFav() {
-    if(id===undefined){
-      return;
-    }
-    if (localStorage.getItem("userToken") !== null || localStorage.getItem("userToken") !== undefined) {
+    if (localStorage.getItem("userToken") !== null) {
       addToFav(id).then((res) => {
         if (res) {
           setIsFav(true);
@@ -38,7 +35,7 @@ export default function Favorite({ id, fav }: { id: string, fav:boolean }) {
   }
 
   async function removeFav(){
-    if (localStorage.getItem("userToken") !== null||  localStorage.getItem("userToken") !== undefined) {
+    if (localStorage.getItem("userToken") !== null) {
       removeFromFav(id).then((res) => {
         if (res) {
           setIsFav(false);

@@ -54,7 +54,6 @@ export default function Publish({ postData }) {
 
   async function postToDatabase(raw_text: string, userID_parameter: string) {
     try {
-
       const response = await axios.post<postInterface>(
         "http://120.25.216.186:8888/post/addpost",
         {
@@ -69,13 +68,13 @@ export default function Publish({ postData }) {
 
       const post_id = response.data.id;
 
-      // const mr = await axios.post<milvusData>("/api/milvus", {
-      //   id: response.data.id,
-      //   title: title_value,
-      //   text: raw_text,
-      // });
+      const mr = await axios.post<milvusData>("/api/milvus", {
+        id: response.data.id,
+        title: title_value,
+        text: raw_text,
+      });
 
-      // console.log(mr.status);
+      console.log(mr.status);
 
       // 跳转到刚发布的帖子界面
       window.location.href = `/posts/${response.data.id}`;
@@ -127,14 +126,13 @@ export default function Publish({ postData }) {
       //       onOpen();
       //     } else {
       //       alert("Your post is not toxic, please continue.");
-      //       postToDatabase(raw_text,localStorage.getItem("userId"));
+      //       postToDatabase(raw_text, localStorage.getItem("userId"));
       //     }
       //   });
 
-      postToDatabase(raw_text,localStorage.getItem("userId"));
+      postToDatabase(raw_text, localStorage.getItem("userId"));
 
       console.log("完成");
-    
     } catch (e) {
       setError(e.message);
     } finally {
@@ -142,12 +140,13 @@ export default function Publish({ postData }) {
     }
   };
 
-  const handleSubmit_anonymous = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit_anonymous = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault(); // Prevent default form submission behavior
     // const userID=localStorage.getItem("accessToken");
     setIsLoading_anonymous(true);
     setError("");
-
 
     let content_value_check = content_value.replaceAll("<p><br></p>", "");
     if (content_value_check === "" || title_value === "") {
@@ -177,14 +176,13 @@ export default function Publish({ postData }) {
       //       onOpen();
       //     } else {
       //       alert("Your post is not toxic, please continue.");
-      //       postToDatabase(raw_text,"99999");
+      //       postToDatabase(raw_text, "99999");
       //     }
       //   });
 
       postToDatabase(raw_text,"99999");
-      
-      console.log("完成");
 
+      console.log("完成");
     } catch (e) {
       setError(e.message);
     } finally {
@@ -233,7 +231,9 @@ export default function Publish({ postData }) {
       <Box width="100%">
         <Card variant="filled" height="10vh"></Card>
         <HStack pos="relative" top="-10" px="10vw">
-          <Heading fontFamily='var(--font-title-post)' pt={10}>发帖</Heading>
+          <Heading fontFamily="var(--font-title-post)" pt={10}>
+            发帖
+          </Heading>
         </HStack>
       </Box>
       <Flex
@@ -276,7 +276,7 @@ export default function Publish({ postData }) {
             isLoading={isLoading_anonymous}
             loadingText="发送中..."
             onClick={handleSubmit_anonymous}
-            colorScheme='blackAlpha'
+            colorScheme="blackAlpha"
             rightIcon={<RiSpyLine />}
           >
             匿名发送

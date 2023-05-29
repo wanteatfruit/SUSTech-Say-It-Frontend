@@ -86,7 +86,7 @@ export default function SpaceCard({
           <Link href={`/user/send/${mostActiveUserid}`}>
           <StatNumber  alignItems='center'>{mostActiveUsername}</StatNumber>
           </Link>
-          <StatHelpText>超越了<span style={{color:'var(--minimal-2)', fontWeight:'600'}}>{mostActiveUserPercent}%</span>的用户</StatHelpText>
+          <StatHelpText>近一周发贴数量是所有用户的<span style={{color:'var(--minimal-2)', fontWeight:'600'}}>{mostActiveUserPercent}%</span></StatHelpText>
         </Stat>
       </CardBody>
       <CardFooter flexDir="column">

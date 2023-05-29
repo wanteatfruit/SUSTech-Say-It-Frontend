@@ -44,7 +44,7 @@ var rel = require("dayjs/plugin/relativeTime");
 dayjs.locale("zh-cn");
 dayjs.extend(rel);
 
-export default function PostHeader({
+export default function PostHeaderInUserCenter({
   title,
   content,
   time,
@@ -231,7 +231,7 @@ export default function PostHeader({
           >
             <CardHeader pb={0}>
               <HStack>
-                <Text>{userName} - </Text>
+                {/* <Text>{userName} - </Text> */}
                 <Text suppressHydrationWarning={true}>
                   {dayjs(time).fromNow()}
                 </Text>
@@ -244,9 +244,6 @@ export default function PostHeader({
               css={{
                 "& img": {
                   maxHeight: "10vh",
-                },
-                "& code":{
-                  maxWidth:'50vw'
                 },
               }}
               overflow="hidden"

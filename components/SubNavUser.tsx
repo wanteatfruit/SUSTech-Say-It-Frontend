@@ -27,7 +27,16 @@ function SubNavButton({ icon, text, onClick, isActive }: SubNavButtonProps) {
       color={isActive ? "var(--minimal-2)" : "gray.700"}
       _hover={{ color: "var(--minimal-2)" }}
       _focus={{ color: "var(--minimal-2)" }}
-      _after={{content: '""', position: 'absolute', bottom: '-6px', left: '0', width: '100%', height: '2px', bg: 'var(--minimal-2)', opacity: isActive ? '1' : '0'  }}
+      _after={{
+        content: '""',
+        position: "absolute",
+        bottom: "-6px",
+        left: "0",
+        width: "100%",
+        height: "2px",
+        bg: "var(--minimal-2)",
+        opacity: isActive ? "1" : "0",
+      }}
       // bgColor={isActive ? "var(--minimal-2)" : "white"}
       fontWeight={isActive ? "bold" : "normal"}
       // borderBottom={isActive ? "4px solid var(--minimal-2)" : "none"}
@@ -54,8 +63,22 @@ export default function SubNav() {
   }, []);
 
   return (
-    <Box bg="" boxShadow="md" mt="70px">
-      <HStack spacing={4} py={1}  px={8} justifyContent={"center"} alignItems='end'>
+    <Box
+      bg="white"
+      w="100%"
+      position="fixed"
+      top="20px"
+      boxShadow="md"
+      mt="50px"
+      zIndex={999}
+    >
+      <HStack
+        spacing={4}
+        py={1}
+        px={8}
+        justifyContent={"center"}
+        alignItems="end"
+      >
         <SubNavButton
           icon={FaRegNewspaper}
           text="帖子"

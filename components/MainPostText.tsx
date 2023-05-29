@@ -41,6 +41,9 @@ import {
 } from "@/pages/api/PostAPI";
 import Favorite from "./posts/AddtoFavorite";
 import { getUserByID } from "@/pages/api/UserAPI";
+import rehypeHighlight from "rehype-highlight"
+
+
 var rel = require("dayjs/plugin/relativeTime");
 dayjs.locale("zh-cn");
 dayjs.extend(rel);
@@ -70,23 +73,20 @@ export default function MainPost({
   const toast = useToast();
   useEffect(() => {
     // checkToxic();
-
-    if(userid===undefined){
-      return;
-    }
-
+    if(userid === undefined) return;
     getUserByID(userid).then((res) => {
       setAvatar(res.avatar);
       setUserName(res.username);
     });
 
     getPostStatus(id.toString()).then((res) => {
+      if (res === undefined) return;
       setUpvoted(res.upvote);
       setDownVoted(res.downvote);
       setIsFav(res.fav);
-      console.log(isFav)
+      console.log(isFav);
     });
-  }, []);
+  }, [id, userid]);
 
   async function checkToxic() {
     await axios.get(`/api/gpt?type=toxicity&post_id=${id}`).then((res) => {
@@ -115,10 +115,12 @@ export default function MainPost({
               ></Avatar>
             </Link>
             <VStack align="flex-start" spacing="0">
-              <Text>
-                {userName}
+              <Link href={`/user/send/${userid}`}>
+                <Text>{userName}</Text>
+              </Link>
+              <Text fontSize="2xl" fontFamily="var(--font-post-title)">
+                {title}
               </Text>
-              <Text fontSize='2xl' fontFamily='var(--font-post-title)'>{title}</Text>
             </VStack>
           </HStack>
           <VStack align="flex-end" spacing="0">
@@ -127,18 +129,18 @@ export default function MainPost({
           </VStack>
         </HStack>
       </CardHeader>
-      <CardBody mx={2} fontSize="lg">
-        <VStack align="flex-start" spacing="7" ml='7%' css={{'& img':{
+      <CardBody mx={2} fontSize="lg" >
+        <VStack align="flex-start" spacing="7" maxW='50vw' ml="7%" css={{'& img':{
           'max-height':'50vh',
           'max-width':'50vw',
         }}}>
           {/* <Heading fontSize="2xl" fontFamily="var(--font-post-title)">
             {title}
           </Heading> */}
-          <ReactMarkdown rehypePlugins={[rehypeRaw]} children={content} />
+          <ReactMarkdown  rehypePlugins={[rehypeHighlight,rehypeRaw]} children={content} />
         </VStack>
       </CardBody>
-      <CardFooter mx={0}  py={0} mt={4} justify="space-between">
+      <CardFooter mx={0} py={0} mt={4} justify="space-between">
         <HStack>
           <HStack>
             {upvoted ? (
@@ -168,14 +170,14 @@ export default function MainPost({
                 colorScheme="black"
                 cursor="pointer"
                 onClick={async () => {
-                  if(localStorage.getItem('userId')===null){
+                  if (localStorage.getItem("userId") === null) {
                     toast({
                       title: "请先登录",
                       status: "error",
                       duration: 2000,
                       isClosable: true,
-                    })
-                    return
+                    });
+                    return;
                   }
                   setUpvoted(true);
                   if (downvoted) {
@@ -214,7 +216,7 @@ export default function MainPost({
                 as={motion.div}
                 border="0"
                 whileTap={{ scale: 1.2 }}
-                onClick={async() => {
+                onClick={async () => {
                   setDownVoted(false);
                   setAnimateScoreUp(true);
                   await deleteDownvote(title);
@@ -235,14 +237,14 @@ export default function MainPost({
                 colorScheme="black"
                 cursor="pointer"
                 onClick={async () => {
-                  if(localStorage.getItem('userId')===null){
+                  if (localStorage.getItem("userId") === null) {
                     toast({
                       title: "请先登录",
                       status: "error",
                       duration: 2000,
                       isClosable: true,
-                    })
-                    return
+                    });
+                    return;
                   }
                   setDownVoted(true);
                   if (upvoted) {
@@ -259,8 +261,8 @@ export default function MainPost({
             )}
           </HStack>
         </HStack>
-        <Favorite id={id===undefined?"0": id.toString()} fav={isFav} />
-      </CardFooter >
+        <Favorite id={id === undefined ? "0" : id.toString()} fav={isFav} />
+      </CardFooter>
     </Card>
   );
 }
