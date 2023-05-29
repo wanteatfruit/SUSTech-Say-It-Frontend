@@ -8,11 +8,8 @@ import type { AppProps } from "next/app";
 import localFont from "next/font/local";
 import { MilvusClient } from "@zilliz/milvus2-sdk-node/dist/milvus";
 import { mconfig } from "@/milvus_config";
-// export const requestOptions={
-//   headers:{
-//       'cookie':`${localStorage.getItem("userID")}`
-//   }
-// }
+
+console.log = function(){}; //clean up console
 
 export function getCookie() {
   if (typeof window !== "undefined") {
