@@ -36,6 +36,7 @@ import Summarize from "@/components/side-plugins/Summarize";
 import { RiSendPlaneLine, RiSpyLine } from "react-icons/ri";
 import Fuse from "fuse.js";
 import { sortByDate } from "../api/PostAPI";
+import Head from "next/dist/shared/lib/head";
 export default function Post() {
   const router = useRouter();
   const id = router.query.id;
@@ -80,7 +81,7 @@ export default function Post() {
         console.log(data);
         const searchText = mainPost?.title;
         console.log(searchText)
-        const fuse = new Fuse(data, {keys:["title"]});
+        const fuse = new Fuse(data, {keys:["title","content"]});
         const result = fuse.search(searchText).slice(1, 6);
         // setRelatedPosts(result.map((result) => result.item));
         console.log(result);
@@ -174,6 +175,9 @@ export default function Post() {
 
   return (
     <>
+    <Head>
+        <title>{mainPost?.title}</title>
+    </Head>
       <Navbar />
       <BackToTopButton />
       <Flex mt={16} pb={16} direction="column">

@@ -1,30 +1,21 @@
 import Navbar from "@/components/Navbar";
 import {
   Box,
-  Card,
-  CardHeader,
   Flex,
   HStack,
   VStack,
-  Text,
-  CardFooter,
-  Link,
-  Button,
-  CardBody,
   useDisclosure,
 } from "@chakra-ui/react";
+import Head from "next/dist/shared/lib/head";
 import SpaceHeader from "@/components/spaces/SpaceHeader";
 import SpaceCard from "@/components/spaces/SpaceCard";
 import PostHeader from "@/components/PostHeader";
-import Footer from "@/components/Footer";
 import styles from "../../styles/pagination.module.css";
-import MapPage from "@/components/side-plugins/UniversityMap";
 import MapPlugin from "@/components/side-plugins/UniversityMap";
 import { chatSpaceInfo } from "../../lib/chatInfo";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { postInterface } from "@/interfaces/postInterface";
 import { getPostsBySpace } from "../api/PostAPI";
-import StackOverflow from "@/components/side-plugins/StackOverflow";
 import ReactPaginate from "react-paginate";
 import BackToTopButton from "@/components/BackToTop";
 import SpacePostFilter from "@/components/spaces/SpacePostFilter";
@@ -79,6 +70,9 @@ export default function Space({posts}:InferGetStaticPropsType<typeof getStaticPr
 
   return (
     <>
+    <Head>
+      <title>{chatSpaceInfo.name}</title>
+    </Head>
     <BackToTopButton />
       <MapPlugin isOpen={isOpen} onClose={onClose} />
       <Flex  mt={12} mb={20} direction="column">

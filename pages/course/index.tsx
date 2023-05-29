@@ -13,6 +13,7 @@ import {
   CardBody,
   useDisclosure,
 } from "@chakra-ui/react";
+import Head from "next/dist/shared/lib/head";
 import SpaceHeader from "@/components/spaces/SpaceHeader";
 import SpaceCard from "@/components/spaces/SpaceCard";
 import PostHeader from "@/components/PostHeader";
@@ -79,6 +80,9 @@ export default function Space({posts}:InferGetStaticPropsType<typeof getStaticPr
 
   return (
     <>
+      <Head>
+        <title>{courseSpaceInfo.name}</title>
+        </Head>
     <BackToTopButton />
       <MapPlugin isOpen={isOpen} onClose={onClose} />
       <Flex  mt={12} mb={20} direction="column">

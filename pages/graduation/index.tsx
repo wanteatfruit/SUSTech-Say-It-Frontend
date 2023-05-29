@@ -27,6 +27,7 @@ import { postInterface } from "@/interfaces/postInterface";
 import { getPostsBySpace } from "../api/PostAPI";
 import ReactPaginate from "react-paginate";
 import { useState, useEffect } from "react";
+import Head from "next/dist/shared/lib/head";
 import BackToTopButton from "@/components/BackToTop";
 import UniversityRankings from "@/components/side-plugins/UniversityRanking";
 import SpacePostFilter from "@/components/spaces/SpacePostFilter";
@@ -89,6 +90,9 @@ export default function Space({
 
   return (
     <>
+    <Head>
+        <title>{graduationInfo.name}</title>
+    </Head>
       <MapPlugin isOpen={isOpen} onClose={onClose} />
       <UniversityRankings isOpen={isRankOpen} onClose={onRankClose} />
       <BackToTopButton />

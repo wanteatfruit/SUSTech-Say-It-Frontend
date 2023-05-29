@@ -35,6 +35,7 @@ import {
 import BackToTopButton from "@/components/BackToTop";
 import PaginatedItems from "@/components/Pagniation";
 import Footer from "@/components/Footer";
+import Head from "next/dist/shared/lib/head";
 interface Props {
   byViewCount: postInterface[];
   byVote: postInterface[];
@@ -47,9 +48,9 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const datePost = await sortByDate();
   return {
     props: {
-      byViewCount: count.slice(0, 10),
-      byDate: datePost.slice(0, 10),
-      byVote: votePost.slice(0, 10),
+      byViewCount: count.slice(0, 5),
+      byDate: datePost.slice(0, 5),
+      byVote: votePost.slice(0, 5),
     },
     revalidate: 1,
   };
@@ -120,6 +121,9 @@ export default function Main({
 
   return (
     <>
+    <Head>
+        <title>JUST-SAY-IT</title>
+    </Head>
       <BackToTopButton />
       <Flex mt={12} mb={10} direction="column" opacity={2}>
         <Navbar />
@@ -234,8 +238,9 @@ export default function Main({
               ))}
           </VStack>
         </Flex>
-        {/* <Footer /> */}
+        
       </Flex>
+      <Footer />
     </>
   );
 }
